@@ -1,18 +1,16 @@
 $(document).ready(function () {
 	$(document).ready(function(){        
-		$('li img').on('click',function(){
-			var src = $(this).attr('src');
+		$('li .thumbnail').on('click',function(){
+			var src = $(this).children('img').attr('src');
 			var img = '<img src="' + src + '" class="img-responsive"/>';
-			
+			var id =$(this).children('img').attr('id');
+			var upvotes=document.getElementsByName('upvotes_'+id)[0].value;
+			var downvotes=document.getElementsByName('downvotes_'+id)[0].value;
 			//start of new code new code
 			var index = $(this).parent('li').index();   
 			
 			var html = '';
-			html += img;                
-			html += '<div style="height:25px;clear:both;display:block;">';
-			html += '<a class="controls next" href="'+ (index+2) + '">next &raquo;</a>';
-			html += '<a class="controls previous" href="' + (index) + '">&laquo; prev</a>';
-			html += '</div>';
+			html += img;
 			
 			$('#myModal').modal();
 			$('#myModal').on('shown.bs.modal', function(){
@@ -65,4 +63,16 @@ $(document).ready(function () {
 		
 		return false;
 	});
+
+    $("[rel='tooltip']").tooltip();
+
+    $('.thumbnail').hover(
+
+    function() {
+        $(this).find('.caption').slideDown(250);
+    },
+
+    function() {
+        $(this).find('.caption').slideUp(250);
+    });
 });
