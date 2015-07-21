@@ -1,0 +1,85 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Cute Dog Images- Flickr</title>
+	<link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+	ul {         
+          padding:0 0 0 0;
+          margin:0 0 0 0;
+      }
+      ul li {     
+          list-style:none;
+          margin:25px;           
+      }
+      ul li img {
+          cursor: pointer;
+      }
+      .modal-body {
+          padding:5px !important;
+      }
+      .modal-content {
+          border-radius:0;
+      }
+      .modal-dialog img {
+          text-align:center;
+          margin:0 auto;
+      }
+    .controls{          
+        width:50px;
+        display:block;
+        font-size:11px;
+        padding-top:8px;
+        font-weight:bold;          
+    }
+    .next {
+        float:right;
+        text-align:right;
+    }
+      /*override modal for demo only*/
+      .modal-dialog {
+          max-width:500px;
+          padding-top: 90px;
+      }
+      @media screen and (min-width: 768px){
+          .modal-dialog {
+              height : 300px;
+              padding-top: 90px;
+          }          
+      }
+      @media screen and (max-width:1500px){
+          #ads {
+              display:none;
+          }
+      }
+</style>
+<body>
+<div class="fluid-container">
+<ul class="row">
+	<% 
+		for(var i=0;i< resp.length; i++)
+		{
+			if(resp[i].Url != null && !resp[i].Url == "" ) { %>
+		<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><img src=<%=resp[i].Url%> style="width:200px; height:200px" id=<%=i%>><br></li>
+		<%}}
+	%>
+</ul>
+<div class="modal fade" style="" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">         
+          <div class="modal-body">                
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+    <script src="jquery/dist/jquery.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
+	<script src="/gallery.js"></script>
+</body>
+</html>
