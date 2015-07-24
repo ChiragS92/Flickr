@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Cute Dog Images- Flickr</title>
+	<title>Images Gallery- Flickr</title>
 	<link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -75,22 +75,75 @@
                 overflow:hidden;
             }
 </style>
+  <%
+  var j=0;
+  %>
+
+<script>
+  var res = [];
+  /*for(var i=0;i<<%=resp.length%>;i++)
+  {
+    var o = new Object();
+    o.Image_ID = "<%=resp[j].Image_ID %>";
+    o.Title = "<%=resp[j].Title %>";
+    o.Url = "<%=resp[j].Url %>";
+    o.Upvotes = <%=resp[j].Upvotes %>;
+    o.Downvotes = <%=resp[j++].Downvotes %>;
+    res.push(o);
+  }*/
+  <%for(var i=0; i<resp.length;i++){%>
+     var o = new Object();
+    o.Image_ID = "<%=resp[i].Image_ID %>";
+    o.Title = "<%=resp[i].Title %>";
+    o.Url = "<%=resp[i].Url %>";
+    o.Upvotes = <%=resp[i].Upvotes %>;
+    o.Downvotes = <%=resp[i].Downvotes %>;
+    res.push(o);
+  <%}%>
+  </script>
+  <script>
+
+  function sortImages()
+  {
+    res.sort(function(a,b){
+      return (a.Upvotes+a.Downvotes)-(b.Upvotes+b.Downvotes);
+    });
+    document.getElementById("images").innerHTML="";
+    var html = document.getElementById("images").innerHTML;
+    for(var i=0;i<res.length;i++)
+    {
+          if(res[i].Url != null && !res[i].Url == "" ) { 
+          html+= "<input type='hidden' id='ID_'"+i+"' value='"+res[i].Image_ID+"' />";
+          html+= "<input type='hidden' id='upvotes_'"+i+"' value='"+res[i].Upvotes+"' />";
+          html+= "<input type='hidden' id='downvotes_'"+i+"' value='"+res[i].Downvotes+"' />";
+          html+= "<li class='col-lg-2 col-md-2 col-sm-3 col-xs-4'><div class='thumbnail'>";
+          html+= "<div class='caption'><p>"+ res[i].Title +"</p></div>";
+          html+= "<img src='"+res[i].Url+"' style='width:300px; height:200px' id='"+i+"'>";
+          html+= "<div class='row'></div>";
+          html+= "</div></li>";
+          }
+    }
+    document.getElementById("images").innerHTML= html;
+  }
+</script>
 <body>
 <div class="container">
-<div class="row" style="text-align : center"> <h1>Cute Puppy Image Gallery </h1></div>
-<ul class="row">
+<div class="row" style="text-align : center"> <h1> Image Gallery </h1></div>
+<!--<div class="row" style="text-align : center"><input type="submit" class="btn btn-info btn-lg" onClick="sortImages();" value="Sort Images" /></div>-->
+<ul class="row" id="images">
 	<% 
-		for(var i=0;i< resp.length; i++)
-		{
-			if(resp[i].Url != null && !resp[i].Url == "" ) { %>
-			<input type="hidden" name="upvotes_<%=i%>" value='<%=resp[i].Upvotes%>' />
-			<input type="hidden" name="downvotes_<%=i%>" value='<%=resp[i].Downvotes%>' />
-		<li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">
-		<div class="caption"><p><%= resp[i].Title%> </p></div>
-		<img src=<%=resp[i].Url%> style="width:300px; height:200px" id=<%=i%>>
-		<div class="row"></div>
-		</div></li>
-		<%}}
+    for(var i=0;i< resp.length; i++)
+    {
+      if(resp[i].Url != null && !resp[i].Url == "" ) { %>
+      <input type="hidden" id="ID_<%=i%>" value='<%=resp[i].Image_ID%>' />
+      <input type="hidden" id="upvotes_<%=i%>" value='<%=resp[i].Upvotes%>' />
+      <input type="hidden" id="downvotes_<%=i%>" value='<%=resp[i].Downvotes%>' />
+    <li class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">
+    <div class="caption"><p><%= resp[i].Title%> </p></div>
+    <img src=<%=resp[i].Url%> style="width:300px; height:200px" id=<%=i%>>
+    <div class="row"></div>
+    </div></li>
+    <%}}
 	%>
 </ul>
 <div class="modal fade" style="" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
